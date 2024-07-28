@@ -1,10 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[367]:
-
-
 import pandas as pd
+import numpy as np
+#importing for visualizing data and plotting 
+import matplotlib.pyplot as plt
+import seaborn as sns
 #Reading csv file into a dataframe
 df = pd.read_csv('DataB.csv')
 #Get the last column in another variable
@@ -14,17 +12,12 @@ df = df.loc[:, ~df.columns.isin(['Unnamed: 0', 'gnd'])]
 #Visualizing top rows of data file after dropping columns
 df.head()
 
-
-# Step 1 of PCA is to normalize the sample matrix
-# In our case, the sample matrix is n x d where n=2066 and d=784.
-# 
-# To normalize we use, a sample 
-# 
-# 
-# Xij = Xij - mean(Xj) where i ranges from 1 to n and j ranges from 1 to d
-
-# In[368]:
-
+'''
+Step 1 of PCA is to normalize the sample matrix
+In our case, the sample matrix is n x d where n=2066 and d=784.
+To normalize we use, a sample 
+Xij = Xij - mean(Xj) where i ranges from 1 to n and j ranges from 1 to d
+'''
 
 #Normalize by subtracting mean
 df = df - df.mean()
@@ -33,10 +26,6 @@ df = df - df.mean()
 df.head()
 
 
-# In[376]:
-
-
-import numpy as np
 #Get the data in a matrix
 A = np.matrix(df)
 #Creating covariance matrix by using transpose matrix
@@ -53,12 +42,7 @@ PrincipalComponent12 = pd.DataFrame(projection12, columns=['PCA Principal Compon
 PrincipalComponent12.head(10)
 
 
-# In[370]:
 
-
-#importing for visualizing data and plotting 
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 #Setting the plot size and axes
 fig = plt.figure(figsize=(10, 8))
@@ -67,10 +51,12 @@ fig = plt.figure(figsize=(10, 8))
 sns.scatterplot(x = "PCA Principal Component 1", y = "PCA Principal Component 2", data = PrincipalComponent12, palette = 'Set1', hue = "gndColumn")
 
 
-# 2. We can see that using PCA and the first and second Principal components which contain the maximum variance helps to distinguish between the various classes. The classes have been set to different colours to show the variation. We were successfully able to linearly transform the data to 2 dimensions. We also note that classes corresponding to red, blue and orange are more separated. Classes represented by purple and green are much more similar to each other than the other classes because of which they appear more superimposed on each other.
-
-# In[371]:
-
+'''
+We can see that using PCA and first and second Principal components which contain the maximum variance helps to distinguish between the various classes. 
+The classes have been set to different colours to show the variation. 
+We were successfully able to linearly transform the data to 2 dimensions. We also note that classes corresponding to red, blue and orange are more separated. 
+Classes represented by purple and green are much more similar to each other than the other classes because of which they appear more superimposed on each other.
+'''
 
 #Considering the fifth and sixth columns of the eigenvector
 eigenVectors56 = np.take(eigenVector, [4, 5], axis=1)
